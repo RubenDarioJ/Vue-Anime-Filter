@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import TestComponent from './components/Test.vue'
+import MoneyComponent from './components/Money.vue'
 import ImageComponent from './components/Images.vue'
 </script>
 
 <template>
   <h1>
-    <TestComponent title="Hola, es Ruben Dario" />
+    <MoneyComponent title="Hola, es Ruben Dario" />
   </h1>
   <h2>
     <ImageComponent />
