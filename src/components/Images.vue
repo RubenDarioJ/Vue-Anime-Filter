@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
+import { RouterView } from 'vue-router'
+
 const images = ref<Object>([
   {
     id: 1,
@@ -67,9 +70,6 @@ const showNSFW = ref<boolean>(true)
 
 const toggleNSFWVisibility = () => {
   showNSFW.value = !showNSFW.value
-  // if (showNSFW.value) {
-  //   images.value = [...imageCopy.value]
-  // }
 }
 </script>
 
@@ -85,7 +85,9 @@ const toggleNSFWVisibility = () => {
         v-bind:class="{ fav: image.isFav }"
         @click="filter.changeColor(image)"
       >
-        <img :src="image.img" alt="" />
+          <RouterLink to="/info">
+            <img :src="image.img" alt="" />
+          </RouterLink>
         <p>{{ image.title }}</p>
         <p>{{ image.rating }}</p>
         <button @click="filter.filterById(image.id)">Borrar</button>
