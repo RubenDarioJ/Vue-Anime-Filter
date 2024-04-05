@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
-import { RouterView } from 'vue-router'
+import { useAnimeDataStore } from '@/stores/animeData'
 
 const images = ref<Object>([
   {
@@ -85,9 +85,9 @@ const toggleNSFWVisibility = () => {
         v-bind:class="{ fav: image.isFav }"
         @click="filter.changeColor(image)"
       >
-          <RouterLink to="/info">
-            <img :src="image.img" alt="" />
-          </RouterLink>
+        <RouterLink to="/info">
+          <img :src="image.img" alt="" />
+        </RouterLink>
         <p>{{ image.title }}</p>
         <p>{{ image.rating }}</p>
         <button @click="filter.filterById(image.id)">Borrar</button>
