@@ -1,96 +1,29 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useAnimeDataStore } from '@/stores/animeData'
 
-const images = ref<Object>([
-  {
-    id: 1,
-    title: 'Anime girl',
-    url: 'youtube.com',
-    img: './src/assets/images/img.jpg',
-    isFav: true,
-    rating: 'Safe'
-  },
-  {
-    id: 2,
-    title: 'Anime girl',
-    url: 'youtube.com',
-    img: './src/assets/images/img2.png',
-    isFav: true,
-    rating: 'Safe'
-  },
-  {
-    id: 3,
-    title: 'Anime girl',
-    url: 'youtube.com',
-    img: './src/assets/images/img3.jpg',
-    isFav: false,
-    rating: 'Safe'
-  },
-  {
-    id: 4,
-    title: 'Anime girl',
-    url: 'youtube.com',
-    img: './src/assets/images/img4.jpg',
-    isFav: false,
-    rating: 'NSFW'
-  },
-  {
-    id: 5,
-    title: 'Anime girl',
-    url: 'youtube.com',
-    img: './src/assets/images/img5.jpg',
-    isFav: false,
-    rating: 'NSFW'
-  }
-])
-
-const imageCopy = ref([{ ...images }])
-console.log(imageCopy)
-
-const filter = ref({
-  filterById(userId) {
-    const filteredDataById = images.value.findIndex((user) => user.id === userId)
-    console.log(filteredDataById)
-    images.value.splice(filteredDataById, 1)
-  },
-  filterNSFW(rating) {
-    images.value = images.value.filter((element) => {
-      return element.rating === rating
-    })
-    toggleNSFWVisibility()
-  },
-  changeColor(image) {
-    image.isFav = !image.isFav
-  }
-})
-
-const showNSFW = ref<boolean>(true)
-
-const toggleNSFWVisibility = () => {
-  showNSFW.value = !showNSFW.value
-}
+const animeDataStore = useAnimeDataStore()
 </script>
 
 <template>
   <div>
-    <ul>
-      <button class="NSFWFilter" @click="filter.filterNSFW('Safe')">
-        {{ showNSFW ? 'Filtrar NSFW' : 'Mostrar NSFW' }}
-      </button>
-      <!-- <button class="displayNSFW">Display NSFW</button> -->
+    <button class="NSFWFilter" @click="animeDataStore.toggleNSFWItems()">
+      {{ animeDataStore.showingNSFW ? 'Filtrar NSFW' : 'Mostrar NSFW' }}
+    </button>
+
+    <ul style="padding-left: 0;">
       <li
-        v-for="image in images"
-        v-bind:class="{ fav: image.isFav }"
-        @click="filter.changeColor(image)"
+        v-for="anime in animeDataStore.data.filter((anime) => anime.show)"
+        v-bind:class="{ fav: anime.isFav }"
+        class="d-flex"
       >
-        <RouterLink to="/info">
-          <img :src="image.img" alt="" />
+        <RouterLink :to="`/anime/${anime.id}`">
+          <img :src="`./src/assets/images/${anime.img}`" :alt="anime.title" />
         </RouterLink>
-        <p>{{ image.title }}</p>
-        <p>{{ image.rating }}</p>
-        <button @click="filter.filterById(image.id)">Borrar</button>
+        <p>{{ anime.title }}</p>
+        <p>{{ anime.rating }}</p>
+        <button @click="animeDataStore.toggleItemFav(anime.id)">Favorito</button>
+        <button @click="animeDataStore.removeItem(anime.id)">Borrar</button>
       </li>
     </ul>
   </div>
@@ -102,39 +35,7 @@ li {
   margin: 20px auto;
   padding: 10px 20px;
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   cursor: pointer;
-}
-
-img {
-  background-color: #333;
-  object-fit: cover;
-  width: 150px;
-  aspect-ratio: 1/1;
-  border-radius: 50%;
-  margin: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-  transition: all 0.7s;
-}
-
-button {
-  cursor: pointer;
-  background-color: #ffff00;
-  border-radius: 12px;
-  color: #000;
-  cursor: pointer;
-  font-weight: bold;
-  padding: 10px 15px;
-  text-align: center;
-  transition: 200ms;
-  box-sizing: border-box;
-  border: 0;
-  font-size: 16px;
-  user-select: none;
-  touch-action: manipulation;
 }
 
 .NSFWFilter {
@@ -146,9 +47,5 @@ button {
 .displayNSFW {
   display: block;
   margin: 0 auto;
-}
-
-li.fav {
-  background-color: grey;
 }
 </style>

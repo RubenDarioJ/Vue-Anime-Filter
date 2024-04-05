@@ -1,17 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
+
 defineProps({
   title: String
 })
-
-// const nameInputRef = ref<HTMLInputElement | null>(null);
-
-// const handleClick = () => {
-//   if (nameInputRef.value) {
-//     console.log(nameInputRef.value.value);
-//   }
-// };
 
 const ahorros = ref<number>(500)
 

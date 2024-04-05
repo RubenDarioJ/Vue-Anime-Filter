@@ -2,6 +2,45 @@
 body {
   margin: 0;
 }
+
+img {
+  background-color: #333;
+  object-fit: cover;
+  width: 150px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  margin: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: all 0.7s;
+}
+
+.d-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fav {
+  background-color: grey;
+}
+
+button {
+  cursor: pointer;
+  background-color: #ffff00;
+  border-radius: 12px;
+  color: #000;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 10px 15px;
+  text-align: center;
+  transition: 200ms;
+  box-sizing: border-box;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  touch-action: manipulation;
+}
 /* #app {
   max-width: 1280px;
   margin: 0 auto;
