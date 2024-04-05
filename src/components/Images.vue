@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { useAnimeDataStore } from '@/stores/animeData'
+import { VueDraggable } from 'vue-draggable-plus'
 
 const animeDataStore = useAnimeDataStore()
 </script>
@@ -12,6 +13,7 @@ const animeDataStore = useAnimeDataStore()
     </button>
 
     <ul style="padding-left: 0;">
+      <VueDraggable>
       <li
         v-for="anime in animeDataStore.data.filter((anime) => anime.show)"
         v-bind:class="{ fav: anime.isFav }"
@@ -25,6 +27,7 @@ const animeDataStore = useAnimeDataStore()
         <button @click="animeDataStore.toggleItemFav(anime.id)">Favorito</button>
         <button @click="animeDataStore.removeItem(anime.id)">Borrar</button>
       </li>
+    </VueDraggable>
     </ul>
   </div>
 </template>
